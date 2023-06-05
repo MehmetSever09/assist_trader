@@ -1,0 +1,19 @@
+
+# Finance Packages
+binance
+ta
+backtrader
+
+# Base packages
+pytest
+pylint
+ipdb
+jupyterlab
+numpy
+pandas
+matplotlib
+seaborn
+
+# modelling
+scikit-learn
+tensorflow
