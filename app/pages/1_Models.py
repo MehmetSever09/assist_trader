@@ -6,7 +6,12 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from PIL import Image
 
-data_bit = pd.read_csv("../app/assets/Data/streaml_models.csv")
+
+st.set_page_config(
+    layout="wide"
+)
+
+data_bit = pd.read_csv("app/assets/data/streaml_models.csv")
 
 col1, col2, col3 = st.columns(3)
 

@@ -9,19 +9,22 @@ import plotly.graph_objects as go
 import time
 import requests
 
-
 st.set_page_config(
     layout="wide"
 )
 
-### Load df_1h from frame
+### Load df_1d from csv
 
-df_1h = pd.read_csv('data/raw_data/BTCUSDT_daily.csv')
-df_1h["timestamp"] = pd.to_datetime(df_1h["timestamp"])
-df_1h["timestamp"] = df_1h["timestamp"] - pd.Timedelta(hours=3)
-df_1h["timestamp"] = df_1h["timestamp"].dt.floor("D")
+df_1d = pd.read_csv('data/raw_data/BTCUSDT_daily.csv')
+df_1d["timestamp"] = pd.to_datetime(df_1d["timestamp"])
+df_1d["timestamp"] = df_1d["timestamp"] - pd.Timedelta(hours=3)
+df_1d["timestamp"] = df_1d["timestamp"].dt.floor("D")
+df_1d = df_1d[df_1d["timestamp"] > "2023-01-01"]
 
-
+df_1w = pd.read_csv("app/assets/data/BTC-USD_1W.csv")
+df_1w = df_1w.drop(columns=["Adj Close", "Volume"])
+df_1w["Date"] = pd.to_datetime(df_1w["Date"])
+df_1w = df_1w[df_1w["Date"] > "2022-12-25"]
 
 ### Tickers
 
@@ -102,30 +105,46 @@ for s in range(300):
         ### Candlestick plot
 
         # Create figure
-
         fig = go.Figure(
             data=[
                 go.Candlestick(
-                    x=df_1h['timestamp'],
-                    open=df_1h['open'],
-                    high=df_1h['high'],
-                    low=df_1h['low'],
-                    close=df_1h['close']
-                    )
-                ]
-            )
+                    x=df_1w['Date'],
+                    open=df_1w['Open'],
+                    high=df_1w['High'],
+                    low=df_1w['Low'],
+                    close=df_1w['Close']
+                ),
+                go.Scatter(
+                    x=df_1d["timestamp"],
+                    y=(df_1d["close"] + df_1d['open']) / 2,
+                    mode="lines",
+                    marker= {"color":"blue"}
+                )
+            ])
 
-        # Set Params of fig
+        # Update fig params
         fig.update_layout(
             title="Bitcoin - USDT",
-            yaxis_title="Close Price (USDT)",
-            xaxis_title="Time",
             width=1000,
-            height=600
+            height=600,
+            xaxis = {
+                "title": "Time",
+                "tickmode": "array",
+                "tickvals": df_1w["Date"],
+                "range": ["2023-01-01", "2023-06-01"],
+                "rangeslider_visible": False
+            },
+            yaxis = {
+                "title": "Close Price (USDT)",
+                # "range": [10_000, 35_000]
+            },
+            showlegend=False,
+            sliders=[],
+            # display
         )
 
         # Plot
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
         # Ticker refresh timer
         time.sleep(30)
