@@ -7,5 +7,8 @@ import matplotlib.pyplot as plt
 from PIL import Image
 
 
+st.set_page_config(
+    layout="wide"
+)
 
 st.write("# Page 3")

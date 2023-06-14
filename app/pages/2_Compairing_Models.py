@@ -6,14 +6,19 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from PIL import Image
 
-data_arima = pd.read_csv("../app/assets/Data/ARIMA_Model_prediction_outcome.csv")
+
+st.set_page_config(
+    layout="wide"
+)
+
+data_arima = pd.read_csv("app/assets/data/ARIMA_Model_prediction_outcome.csv")
 data_arima['day'] = pd.to_datetime(data_arima['day'])
-data_ets = pd.read_csv("../app/assets/data/ETS_prediction_outcome.csv")
+data_ets = pd.read_csv("app/assets/data/ETS_prediction_outcome.csv")
 data_ets['day'] = pd.to_datetime(data_ets['day'])
-data_theta = pd.read_csv("../app/assets/data/THETA_Model_prediction_outcome.csv")
+data_theta = pd.read_csv("app/assets/data/THETA_Model_prediction_outcome.csv")
 data_theta['day'] = pd.to_datetime(data_theta['day'])
 
-data_bit = pd.read_csv("../data/raw_data/BTCUSDT_daily.csv")
+data_bit = pd.read_csv("data/raw_data/BTCUSDT_daily.csv")
 data_bit = data_bit[(data_bit['timestamp'] > '2023-01-01') & (data_bit['timestamp'] < '2023-06-04')]
 data_bit['timestamp'] = pd.to_datetime(data_bit['timestamp'])
 data_bit['timestamp_day'] = data_bit['timestamp'].dt.floor('D')
