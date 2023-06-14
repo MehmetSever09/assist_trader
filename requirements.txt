@@ -14,7 +14,11 @@ numpy
 pandas
 matplotlib
 seaborn
+plotly
 
 # modelling
 scikit-learn
 tensorflow
+
+# deployment
+streamlit
