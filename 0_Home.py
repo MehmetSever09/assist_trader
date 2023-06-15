@@ -126,7 +126,6 @@ currencies = {
     'XRPUSDT': []
 }
 
-URL = "https://api.binance.com/api/v3/ticker/price"
 
 placeholder = st.empty()
 
@@ -134,15 +133,21 @@ for s in range(1000):
 
     with placeholder.container():
     # Do api calls here
+        URL = "https://api.binance.com/api/v3/ticker/price"
+        all_currencies = requests.get(URL).json()
+        for k in all_currencies:
+            if k['symbol'] in currencies.keys():
+                currencies[k['symbol']].append(round(float(k["price"]), 3))
+                if len(currencies[k['symbol']]) > 2:
+                    del currencies[k['symbol']][0]
+        # for k in currencies.keys():
 
-        for k in currencies.keys():
+        #     params = {"symbol": k}
+        #     response = requests.get(URL).json()['price']
+        #     currencies[k].append(round(float(response), 3))
 
-            params = {"symbol": k}
-            response = requests.get(URL, params=params).json()['price']
-            currencies[k].append(round(float(response), 3))
-
-            if len(currencies[k]) > 2:
-                del currencies[k][0]
+        #     if len(currencies[k]) > 2:
+        #         del currencies[k][0]
 
         # Create diffs here
         if len(currencies['BTCUSDT']) > 1:
