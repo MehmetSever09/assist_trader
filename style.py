@@ -47,3 +47,12 @@ def get_css():
             </style>
 
                '''
+
+def get_title_css():
+    return '''
+            <style>
+            h1{
+                text-align: center
+            }
+
+            '''

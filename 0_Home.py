@@ -15,23 +15,100 @@ st.set_page_config(layout="wide")
 
 # st.markdown(get_css(),unsafe_allow_html=True)
 
-### Sidebar
+# ### Sidebar
 
-st.sidebar.image("app/assets/images/logo_assist_trader_cropped.png", use_column_width=True)
+# st.sidebar.image("app/assets/images/logo_assist_trader_cropped.png", use_column_width=True)
 
 
 ### Load df_1d from csv
 
-df_1d = pd.read_csv('data/raw_data/BTCUSDT_daily.csv')
+df_1d = pd.read_csv('assets/data/BTCUSDT_daily.csv')
 df_1d["timestamp"] = pd.to_datetime(df_1d["timestamp"])
 df_1d["timestamp"] = df_1d["timestamp"] - pd.Timedelta(hours=3)
 df_1d["timestamp"] = df_1d["timestamp"].dt.floor("D")
 df_1d = df_1d[df_1d["timestamp"] > "2023-01-01"]
 
-df_1w = pd.read_csv("app/assets/data/BTC-USD_1W.csv")
+df_1w = pd.read_csv("assets/data/BTC-USD_1W.csv")
 df_1w = df_1w.drop(columns=["Adj Close", "Volume"])
 df_1w["Date"] = pd.to_datetime(df_1w["Date"])
 df_1w = df_1w[df_1w["Date"] > "2022-12-25"]
+
+
+
+### TITLES
+
+col1, _, col3 = st.columns([0.5, 0.32, 0.18])
+
+with col1:
+    st.markdown(" ")
+    st.title("ASSIST TRADER")
+    st.subheader("Building models to predict the next period of Cryptocurrency market for Traders")
+
+with col3:
+
+    # /home/lscr/code/lewagon/2023-q2-wagon/2023-q2-projects/assist_trader/assets/images/logo_assist_trader_cropped.png
+
+    # st.image("app/assets/images/logo_assist_trader_cropped.png", use_column_width=True)
+    image_path = "assets/images/logo_assist_trader_cropped.png"
+    border_color = "#FF7F32"
+    border_width = 2
+
+    styled_image = f'<div style="border: {border_width}px solid {border_color};">' \
+        f'<img src="{image_path}">' \
+        f'</div>'
+
+    # Display the styled image
+    st.markdown(styled_image, unsafe_allow_html=True)
+
+st.markdown(" ")
+
+### CANDLESTICK PLOT
+
+# Create figure
+fig = go.Figure(
+    data=[
+        go.Candlestick(
+            x=df_1w['Date'],
+            open=df_1w['Open'],
+            high=df_1w['High'],
+            low=df_1w['Low'],
+            close=df_1w['Close']
+        ),
+        go.Scatter(
+            x=df_1d["timestamp"],
+            y=(df_1d["close"] + df_1d['open']) / 2,
+            mode="lines",
+            marker= {"color":"blue"}
+        )
+    ])
+
+# Update fig params
+fig.update_layout(
+    title="Bitcoin - USDT",
+    width=1000,
+    height=600,
+    xaxis = {
+        # "title": "Time",
+        "tickmode": "array",
+        "tickvals": df_1w["Date"],
+        "tickangle": -45,
+        "range": ["2023-01-01", "2023-06-01"],
+        "rangeslider_visible": False
+    },
+    yaxis = {
+        "title": "Close Price (USDT)",
+        # "range": [10_000, 35_000]
+    },
+    showlegend=False,
+    sliders=[],
+    # display
+)
+
+# Plot
+st.plotly_chart(fig, use_container_width=True)
+
+
+
 
 ### Tickers
 
@@ -101,58 +178,6 @@ for s in range(1000):
 
         with tick6:
             st.metric("XRP", currencies["XRPUSDT"][-1], f"{xrp_diff: 0.3f} %")
-
-
-        ### Below Tickers
-
-        ###
-        st.title("ASSIST TRADER")
-        st.subheader("Building models to predict the next period of Cryptocurrency market for Traders")
-
-        ### Candlestick plot
-
-        # Create figure
-        fig = go.Figure(
-            data=[
-                go.Candlestick(
-                    x=df_1w['Date'],
-                    open=df_1w['Open'],
-                    high=df_1w['High'],
-                    low=df_1w['Low'],
-                    close=df_1w['Close']
-                ),
-                go.Scatter(
-                    x=df_1d["timestamp"],
-                    y=(df_1d["close"] + df_1d['open']) / 2,
-                    mode="lines",
-                    marker= {"color":"blue"}
-                )
-            ])
-
-        # Update fig params
-        fig.update_layout(
-            title="Bitcoin - USDT",
-            width=1000,
-            height=600,
-            xaxis = {
-                # "title": "Time",
-                "tickmode": "array",
-                "tickvals": df_1w["Date"],
-                "tickangle": -45,
-                "range": ["2023-01-01", "2023-06-01"],
-                "rangeslider_visible": False
-            },
-            yaxis = {
-                "title": "Close Price (USDT)",
-                # "range": [10_000, 35_000]
-            },
-            showlegend=False,
-            sliders=[],
-            # display
-        )
-
-        # Plot
-        st.plotly_chart(fig, use_container_width=True)
 
         # Ticker refresh timer
         time.sleep(60)
