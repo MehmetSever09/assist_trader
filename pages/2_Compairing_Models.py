@@ -19,7 +19,7 @@ data_ets['day'] = pd.to_datetime(data_ets['day'])
 data_theta = pd.read_csv("assets/data/THETA_Model_prediction_outcome.csv")
 data_theta['day'] = pd.to_datetime(data_theta['day'])
 
-data_bit = pd.read_csv("data/raw_data/BTCUSDT_daily.csv")
+data_bit = pd.read_csv("assets/data/BTCUSDT_daily.csv")
 data_bit = data_bit[(data_bit['timestamp'] > '2023-01-01') & (data_bit['timestamp'] < '2023-06-04')]
 data_bit['timestamp'] = pd.to_datetime(data_bit['timestamp'])
 data_bit['timestamp_day'] = data_bit['timestamp'].dt.floor('D')
