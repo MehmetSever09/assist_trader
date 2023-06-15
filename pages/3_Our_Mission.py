@@ -55,12 +55,12 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.write("#### Mehmet")
     image = Image.open("assets/images/mehmet_image.jpg")
-    st.image(image, caption="JPG Image", use_column_width=True)
+    st.image(image, caption="Mehmet", use_column_width=True)
 with col2:
     st.write("#### Irina")
     image = Image.open("assets/images/irina_image_crop.jpg")
-    st.image(image, caption="JPG Image", use_column_width=True)
+    st.image(image, caption="Irina", use_column_width=True)
 with col3:
     st.write("#### Ferdinand")
     image = Image.open("assets/images/ferdinand_image.jpg")
-    st.image(image, caption="JPG Image", use_column_width=True)
+    st.image(image, caption="Ferdinand", use_column_width=True)
