@@ -1,0 +1,9 @@
+[server]
+wideMode=true
+
+[theme]
+primaryColor="#F8F8F8"
+backgroundColor="#272734"
+secondaryBackgroundColor="#FF7F32"
+textColor="#F8F8F8"
+font="monospace"
