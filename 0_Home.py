@@ -15,10 +15,40 @@ st.set_page_config(layout="wide")
 
 # st.markdown(get_css(),unsafe_allow_html=True)
 
-# ### Sidebar
+### TITLES
 
-# st.sidebar.image("app/assets/images/logo_assist_trader_cropped.png", use_column_width=True)
+col1, _, col3 = st.columns([0.50, 0.3, 0.20])
 
+with col1:
+    st.markdown(" ")
+    st.title("ASSIST TRADER")
+    # st.subheader("Building models to predict the next period of Cryptocurrency market for Traders")
+    st.subheader("Machine Learning + Algorithmic decision making to maximise Cryptocurrency investment returns.")
+
+with col3:
+
+    # /home/lscr/code/lewagon/2023-q2-wagon/2023-q2-projects/assist_trader/assets/images/logo_assist_trader_cropped.png
+
+    # st.image("app/assets/images/logo_assist_trader_cropped.png", use_column_width=True)
+    image_path = "https://raw.githubusercontent.com/MehmetSever09/assist_trader/master/assets/images/logo_assist_trader_cropped.png"
+    border_color = "#FF7F32"
+    border_width = 3
+    image_width = 250  # in pixels
+    image_height = 250  # in pixels
+
+    styled_image = f'<div style="border: {border_width}px solid {border_color}; ' \
+                f'width: {image_width}px; height: {image_height}px; ' \
+                f'overflow: hidden;">' \
+                f'<img src="{image_path}" style="object-fit: cover; ' \
+                f'width: 100%; height: 100%;">' \
+                f'</div>'
+
+    # Display the styled image
+    st.markdown(styled_image, unsafe_allow_html=True)
+
+st.markdown(" ")
+
+### CANDLESTICK PLOT
 
 ### Load df_1d from csv
 
@@ -32,37 +62,6 @@ df_1w = pd.read_csv("assets/data/BTC-USD_1W.csv")
 df_1w = df_1w.drop(columns=["Adj Close", "Volume"])
 df_1w["Date"] = pd.to_datetime(df_1w["Date"])
 df_1w = df_1w[df_1w["Date"] > "2022-12-25"]
-
-
-
-### TITLES
-
-col1, _, col3 = st.columns([0.5, 0.32, 0.18])
-
-with col1:
-    st.markdown(" ")
-    st.title("ASSIST TRADER")
-    st.subheader("Building models to predict the next period of Cryptocurrency market for Traders")
-
-with col3:
-
-    # /home/lscr/code/lewagon/2023-q2-wagon/2023-q2-projects/assist_trader/assets/images/logo_assist_trader_cropped.png
-
-    # st.image("app/assets/images/logo_assist_trader_cropped.png", use_column_width=True)
-    image_path = "assets/images/logo_assist_trader_cropped.png"
-    border_color = "#FF7F32"
-    border_width = 2
-
-    styled_image = f'<div style="border: {border_width}px solid {border_color};">' \
-        f'<img src="{image_path}">' \
-        f'</div>'
-
-    # Display the styled image
-    st.markdown(styled_image, unsafe_allow_html=True)
-
-st.markdown(" ")
-
-### CANDLESTICK PLOT
 
 # Create figure
 fig = go.Figure(
@@ -78,7 +77,7 @@ fig = go.Figure(
             x=df_1d["timestamp"],
             y=(df_1d["close"] + df_1d['open']) / 2,
             mode="lines",
-            marker= {"color":"blue"}
+            marker= {"color":"#FF7F32"}
         )
     ])
 
@@ -86,7 +85,7 @@ fig = go.Figure(
 fig.update_layout(
     title="Bitcoin - USDT",
     width=1000,
-    height=600,
+    height=500,
     xaxis = {
         # "title": "Time",
         "tickmode": "array",
@@ -107,8 +106,12 @@ fig.update_layout(
 # Plot
 st.plotly_chart(fig, use_container_width=True)
 
+st.write(" ")
+### Whitespace
 
+st.markdown("""
 
+            """)
 
 ### Tickers
 
@@ -181,8 +184,3 @@ for s in range(1000):
 
         # Ticker refresh timer
         time.sleep(60)
-
-
-
-
-st.write('does this work ouside the loop?') # no

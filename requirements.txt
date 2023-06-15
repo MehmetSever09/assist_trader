@@ -1,15 +1,10 @@
 
 # Finance Packages
-binance
-ta
-backtrader
+# binance
+# ta
+# backtrader
 
 # Base packages
-pytest
-pylint
-ipdb
-jupyterlab
-notebook
 numpy
 pandas
 matplotlib
@@ -17,8 +12,14 @@ seaborn
 plotly
 
 # modelling
-scikit-learn
-tensorflow
+# darts
 
 # deployment
 streamlit
+
+# dev packages
+# pytest
+# pylint
+# ipdb
+# jupyterlab
+# notebook
