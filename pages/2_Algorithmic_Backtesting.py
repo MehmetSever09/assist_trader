@@ -12,6 +12,8 @@ st.set_page_config(
     layout="wide"
 )
 
+### Load Data for graphs
+
 data_arima = pd.read_csv("assets/data/ARIMA_Model_prediction_outcome.csv")
 data_arima['day'] = pd.to_datetime(data_arima['day'])
 data_ets = pd.read_csv("assets/data/ETS_prediction_outcome.csv")
@@ -32,7 +34,37 @@ final_ets = round(data_ets["balance"].iloc[-1])
 final_theta = round(data_theta["balance"].iloc[-1])
 final_hold = round(data_bit["CumulativeReturn"].iloc[-1])
 
-st.title("COMPAIRING MODELS")
+
+### Headings and logo
+
+col1, _, col3 = st.columns([0.50, 0.3, 0.20])
+
+with col1:
+    st.markdown(" ")
+    st.title("ALGORITHMIC BACKTESTING")
+    st.subheader("Back testing for Profit and Loss analysis")
+
+with col3:
+
+    image_path = "https://raw.githubusercontent.com/MehmetSever09/assist_trader/master/assets/images/logo_assist_trader_cropped.png"
+    border_color = "#FF7F32"
+    border_width = 3
+    image_width = 250  # in pixels
+    image_height = 250  # in pixels
+
+    styled_image = f'<div style="border: {border_width}px solid {border_color}; ' \
+                f'width: {image_width}px; height: {image_height}px; ' \
+                f'overflow: hidden;">' \
+                f'<img src="{image_path}" style="object-fit: cover; ' \
+                f'width: 100%; height: 100%;">' \
+                f'</div>'
+
+    # Display the styled image
+    st.markdown(styled_image, unsafe_allow_html=True)
+
+st.write("\n")
+
+### Graphs
 
 col1, col2 = st.columns(2)
 

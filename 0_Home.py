@@ -46,7 +46,8 @@ with col3:
     # Display the styled image
     st.markdown(styled_image, unsafe_allow_html=True)
 
-st.markdown(" ")
+st.write("\n")
+st.write("\n")
 
 ### CANDLESTICK PLOT
 
