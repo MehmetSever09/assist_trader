@@ -117,36 +117,36 @@ st.markdown("""
 ### Tickers
 
 # Create dictionary to hold values
-# currencies = {
-#     'BTCUSDT' : [24971.23],
-#     'ETHUSDT': [1642.59],
-#     'DOGEUSDT': [0.6083],
-#     'BNBUSDT': [232.4],
-#     'ADAUSDT': [0.2572],
-#     'XRPUSDT': [0.4752]
-# }
-
 currencies = {
-    'BTCUSDT' : [],
-    'ETHUSDT': [],
-    'DOGEUSDT': [],
-    'BNBUSDT': [],
-    'ADAUSDT': [],
-    'XRPUSDT': []
+    'BTCUSDT' : [24970.2, 24971.23],
+    'ETHUSDT': [1642.23, 1642.59],
+    'DOGEUSDT': [0.06074, 0.06083],
+    'BNBUSDT': [232.4, 231.2],
+    'ADAUSDT': [0.2572, 0.2565],
+    'XRPUSDT': [0.4752, 0.4762]
 }
+
+# currencies = {
+#     'BTCUSDT' : [],
+#     'ETHUSDT': [],
+#     'DOGEUSDT': [],
+#     'BNBUSDT': [],
+#     'ADAUSDT': [],
+#     'XRPUSDT': []
+# }
 placeholder = st.empty()
 
-for s in range(1000):
+# for s in range(1000):
 
-    with placeholder.container():
-    # Do api calls here
-        URL = "https://api.binance.com/api/v3/ticker/price"
-        all_currencies = requests.get(URL).json()
-        for k in all_currencies:
-            if k['symbol'] in list(currencies.keys()):
-                currencies[k['symbol']].append(round(float(k["price"]), 3))
-                if len(currencies[k['symbol']]) > 2:
-                    del currencies[k['symbol']][0]
+#     with placeholder.container():
+#     # Do api calls here
+#         URL = "https://api.binance.com/api/v3/ticker/price"
+#         all_currencies = list(requests.get(URL).json())
+#         for k in all_currencies:
+#             if k['symbol'] in list(currencies.keys()):
+#                 currencies[k['symbol']].append(round(float(k["price"]), 3))
+#                 if len(currencies[k['symbol']]) > 2:
+#                     del currencies[k['symbol']][0]
         # for k in currencies.keys():
 
         #     params = {"symbol": k}
@@ -157,43 +157,50 @@ for s in range(1000):
         #         del currencies[k][0]
 
         # Create diffs here
-        if len(currencies['BTCUSDT']) > 1:
+        # if len(currencies['BTCUSDT']) > 1:
 
-            btc_diff = (currencies['BTCUSDT'][-1] / currencies["BTCUSDT"][-2] - 1) * 100
-            eth_diff = (currencies['ETHUSDT'][-1] / currencies["ETHUSDT"][-2] - 1) * 100
-            doge_diff = (currencies['DOGEUSDT'][-1] / currencies["DOGEUSDT"][-2] - 1) * 100
-            bnb_diff = (currencies['BNBUSDT'][-1] / currencies["BNBUSDT"][-2] - 1) * 100
-            ada_diff = (currencies['ADAUSDT'][-1] / currencies["ADAUSDT"][-2] - 1) * 100
-            xrp_diff = (currencies['XRPUSDT'][-1] / currencies["XRPUSDT"][-2] - 1) * 100
-        else:
-            btc_diff = 0
-            eth_diff = 0
-            doge_diff = 0
-            bnb_diff = 0
-            ada_diff = 0
-            xrp_diff = 0
+        #     btc_diff = (currencies['BTCUSDT'][-1] / currencies["BTCUSDT"][-2] - 1) * 100
+        #     eth_diff = (currencies['ETHUSDT'][-1] / currencies["ETHUSDT"][-2] - 1) * 100
+        #     doge_diff = (currencies['DOGEUSDT'][-1] / currencies["DOGEUSDT"][-2] - 1) * 100
+        #     bnb_diff = (currencies['BNBUSDT'][-1] / currencies["BNBUSDT"][-2] - 1) * 100
+        #     ada_diff = (currencies['ADAUSDT'][-1] / currencies["ADAUSDT"][-2] - 1) * 100
+        #     xrp_diff = (currencies['XRPUSDT'][-1] / currencies["XRPUSDT"][-2] - 1) * 100
+        # else:
+        #     btc_diff = 0
+        #     eth_diff = 0
+        #     doge_diff = 0
+        #     bnb_diff = 0
+        #     ada_diff = 0
+        #     xrp_diff = 0
 
         # Create columns
-        tick1, tick2, tick3, tick4, tick5, tick6 = st.columns(6)
+
+btc_diff = (currencies['BTCUSDT'][-1] / currencies["BTCUSDT"][-2] - 1) * 100
+eth_diff = (currencies['ETHUSDT'][-1] / currencies["ETHUSDT"][-2] - 1) * 100
+doge_diff = (currencies['DOGEUSDT'][-1] / currencies["DOGEUSDT"][-2] - 1) * 100
+bnb_diff = (currencies['BNBUSDT'][-1] / currencies["BNBUSDT"][-2] - 1) * 100
+ada_diff = (currencies['ADAUSDT'][-1] / currencies["ADAUSDT"][-2] - 1) * 100
+xrp_diff = (currencies['XRPUSDT'][-1] / currencies["XRPUSDT"][-2] - 1) * 100
+tick1, tick2, tick3, tick4, tick5, tick6 = st.columns(6)
 
 
-        with tick1:
-            st.metric("BTC", currencies["BTCUSDT"][-1], f"{btc_diff: 0.3f} %")
+with tick1:
+    st.metric("BTC", currencies["BTCUSDT"][-1], f"{btc_diff: 0.3f} %")
 
-        with tick2:
-            st.metric("ETH", currencies["ETHUSDT"][-1], f"{eth_diff: 0.3f} %")
+with tick2:
+    st.metric("ETH", currencies["ETHUSDT"][-1], f"{eth_diff: 0.3f} %")
 
-        with tick3:
-            st.metric("DOGE", currencies["DOGEUSDT"][-1], f"{doge_diff: 0.3f} %")
+with tick3:
+    st.metric("DOGE", currencies["DOGEUSDT"][-1], f"{doge_diff: 0.3f} %")
 
-        with tick4:
-            st.metric("BNB", currencies["BNBUSDT"][-1], f"{bnb_diff: 0.3f} %")
+with tick4:
+    st.metric("BNB", currencies["BNBUSDT"][-1], f"{bnb_diff: 0.3f} %")
 
-        with tick5:
-            st.metric("ADA", currencies["ADAUSDT"][-1], f"{ada_diff: 0.3f} %")
+with tick5:
+    st.metric("ADA", currencies["ADAUSDT"][-1], f"{ada_diff: 0.3f} %")
 
-        with tick6:
-            st.metric("XRP", currencies["XRPUSDT"][-1], f"{xrp_diff: 0.3f} %")
+with tick6:
+    st.metric("XRP", currencies["XRPUSDT"][-1], f"{xrp_diff: 0.3f} %")
 
-        # Ticker refresh timer
-        time.sleep(60)
+# Ticker refresh timer
+time.sleep(60)
