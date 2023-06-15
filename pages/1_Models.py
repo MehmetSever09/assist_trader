@@ -16,7 +16,7 @@ col1, _, col3 = st.columns([0.50, 0.3, 0.20])
 
 with col1:
     st.markdown(" ")
-    st.title("Comparing Timeseries Models")
+    st.title("COMPARING TIMESERIES MODELS")
     # st.subheader("Building models to predict the next period of Cryptocurrency market for Traders")
     st.subheader("Which model performs better?")
 
@@ -41,7 +41,8 @@ with col3:
     # Display the styled image
     st.markdown(styled_image, unsafe_allow_html=True)
 
-st.markdown(" ")
+st.write("\n")
+st.write("\n")
 
 
 ### Load Data for Graphs
