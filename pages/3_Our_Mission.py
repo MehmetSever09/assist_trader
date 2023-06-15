@@ -34,3 +34,5 @@ with col3:
     st.write("#### Ferdinand")
     image = Image.open("assets/images/ferdinand_image.jpg")
     st.image(image, caption="JPG Image", use_column_width=True)
+
+
