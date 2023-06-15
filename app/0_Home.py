@@ -6,12 +6,19 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 
+from style import get_css
+
 import time
 import requests
 
-st.set_page_config(
-    layout="wide"
-)
+st.set_page_config(layout="wide")
+
+# st.markdown(get_css(),unsafe_allow_html=True)
+
+### Sidebar
+
+st.sidebar.image("app/assets/images/logo_assist_trader_cropped.png", use_column_width=True)
+
 
 ### Load df_1d from csv
 
@@ -42,7 +49,7 @@ URL = "https://api.binance.com/api/v3/ticker/price"
 
 placeholder = st.empty()
 
-for s in range(300):
+for s in range(1000):
 
     with placeholder.container():
     # Do api calls here
@@ -128,9 +135,10 @@ for s in range(300):
             width=1000,
             height=600,
             xaxis = {
-                "title": "Time",
+                # "title": "Time",
                 "tickmode": "array",
                 "tickvals": df_1w["Date"],
+                "tickangle": -45,
                 "range": ["2023-01-01", "2023-06-01"],
                 "rangeslider_visible": False
             },
@@ -147,7 +155,7 @@ for s in range(300):
         st.plotly_chart(fig, use_container_width=True)
 
         # Ticker refresh timer
-        time.sleep(30)
+        time.sleep(60)
 
 
 
