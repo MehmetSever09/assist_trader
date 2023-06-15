@@ -117,6 +117,15 @@ st.markdown("""
 ### Tickers
 
 # Create dictionary to hold values
+# currencies = {
+#     'BTCUSDT' : [24971.23],
+#     'ETHUSDT': [1642.59],
+#     'DOGEUSDT': [0.6083],
+#     'BNBUSDT': [232.4],
+#     'ADAUSDT': [0.2572],
+#     'XRPUSDT': [0.4752]
+# }
+
 currencies = {
     'BTCUSDT' : [],
     'ETHUSDT': [],
@@ -125,8 +134,6 @@ currencies = {
     'ADAUSDT': [],
     'XRPUSDT': []
 }
-
-
 placeholder = st.empty()
 
 for s in range(1000):
@@ -136,7 +143,7 @@ for s in range(1000):
         URL = "https://api.binance.com/api/v3/ticker/price"
         all_currencies = requests.get(URL).json()
         for k in all_currencies:
-            if k['symbol'] in currencies.keys():
+            if k['symbol'] in list(currencies.keys()):
                 currencies[k['symbol']].append(round(float(k["price"]), 3))
                 if len(currencies[k['symbol']]) > 2:
                     del currencies[k['symbol']][0]
